@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"sync"
 	"time"
 	Dao "twiter/tweetSystem/Dao/mysql"
 	DaoRedis "twiter/tweetSystem/Dao/redis"
@@ -42,26 +43,27 @@ func PostTweetAddCelebrity(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		return
 	}
-
-
 	isCelebrity,err:=DaoRedis.IsCelebrityRedis(userId)
 	if err!=nil{
 		//	deal error logic
 		fmt.Println(err)
 		return
 	}
-
-
-	var intChan =make(chan int)
+	//var intChan =make(chan int)
+	var wg sync.WaitGroup
 
 	//----TODO 如果是明星的话 你post twiter之后就啥也别管了  就直接返回
 	if isCelebrity==false {
+
 		//var intChan =make(chan int)
 		//TODO 想一下异步有多少种方法     可以用go  或者Redis中的任务队列  rabbitMq 但是还是用go吧   服务和服务之间担心有时间差
-		fmt.Println("我是明星")
+		fmt.Println("我是不是明星")
+		wg.Add(1)
 		go utitl.FanOutTweet(int(tweetId), userIdInt)
+		wg.Done()
 		//这个你无论协程能否成功，都会返回"上传推文成功"
 	}
+	wg.Wait()
 
 
 
@@ -69,5 +71,5 @@ func PostTweetAddCelebrity(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w,"上传推文成功")
 
-	<- intChan
+	//<- intChan
 }

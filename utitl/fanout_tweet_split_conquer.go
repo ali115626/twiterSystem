@@ -9,7 +9,7 @@ import (
 )
 
 //
-func FanOutTweet(tweetId int,userId int){
+func FanOutTweetTest(tweetId int,userId int){
 	//TODO 这个错误不用返回  直接打印日志就行
 
 	//去 friend system里面获取 Friends的信息   然后这个就是rpc调用吧  反正whatever

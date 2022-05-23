@@ -1,0 +1,33 @@
+syntax = "proto3";
+option go_package="./;message2";
+package message;
+
+
+//订单请求参数
+
+message FetchRequestCommonStar {
+  int64 userId = 1;
+}
+
+//订单信息 repeated User user = 1;
+message FriendsResponseCommonStars {
+  repeated string CommonPersonList =1;
+  repeated string StarPersonList =2;
+
+
+}
+
+//
+
+//订单服务service 信息
+
+service FriendShipCommonStarService{
+  rpc GetFriendsListCommonPersonPlusCelebrity(FetchRequestCommonStar) returns (FriendsResponseCommonStars);
+  //  rpc GetOrderInfo(OrderRequest) returns (OrderInfo);
+}
+
+
+
+
+
+
