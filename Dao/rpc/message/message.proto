@@ -1,0 +1,31 @@
+syntax = "proto3";
+option go_package="./;message";
+package message;
+
+
+//订单请求参数
+
+message FetchRequest {
+  int64 userId = 1;
+}
+
+//订单信息 repeated User user = 1;
+message FriendsResponse {
+  repeated string FriendList =1;
+
+}
+
+//
+
+//订单服务service 信息
+
+service FriendShipService{
+  rpc GetFriendsList(FetchRequest) returns (FriendsResponse);
+//  rpc GetOrderInfo(OrderRequest) returns (OrderInfo);
+}
+
+
+
+
+
+
