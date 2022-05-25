@@ -1,11 +1,12 @@
 package Dao
 
 import (
-	"database/sql"
 	"errors"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"time"
+	Dao "twiter/friendshipSystem/Dao/mysql"
+
 	//"database/sql"
 
 )
@@ -13,11 +14,13 @@ import (
 func InsertTweet(userId string,content string,createAt time.Time) (*int64,error){
 
 
-	db, err := sql.Open("mysql", "root:123456@/twiter_scheme?charset=utf8&loc=Local")
-	if err != nil {
-		fmt.Println("open database error,err=", err)
-		return nil,errors.New(fmt.Sprintf("open database error,err=", err))
-	}
+
+	db,err:=Dao.MysqlInit()
+	//db, err := sql.Open("mysql", "root:123456@/twiter_scheme?charset=utf8&loc=Local")
+	//if err != nil {
+	//	fmt.Println("open database error,err=", err)
+	//	return nil,errors.New(fmt.Sprintf("open database error,err=", err))
+	//}
 		result, err := db.Exec("insert into Tweet(userId,content,createAt) values(?,?,?)",userId, content,createAt)
 	if err != nil {
 		fmt.Println("exec failed, err=", err)
@@ -35,11 +38,12 @@ func InsertTweet(userId string,content string,createAt time.Time) (*int64,error)
 func InsertIntoNewsFeed(friendId int,tweetId int,createAt time.Time)error{
 	//你有必要整这么多链接吗
 	//一个连接不就行了吗  这里面的这个是长链接吗？
-	db, err := sql.Open("mysql", "root:123456@/twiter_scheme?charset=utf8&loc=Local")
-	if err != nil {
-		fmt.Println("open database error,err=", err)
-		return err
-	}
+	//db, err := sql.Open("mysql", "root:123456@/twiter_scheme?charset=utf8&loc=Local")
+	//if err != nil {
+	//	fmt.Println("open database error,err=", err)
+	//	return err
+	//}
+	db,err:=Dao.MysqlInit()
 	_, err = db.Exec("insert into News_feed(friendId,tweetId,createAt) values(?,?,?)",friendId,tweetId,createAt)
 	if err != nil{
 		fmt.Println("insert failed,",err)

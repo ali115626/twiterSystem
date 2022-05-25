@@ -30,8 +30,8 @@ func GetFriendsCommonStarList(userId int) (*message2.FriendsResponseCommonStars,
 		fmt.Println(err)
 		//return nil,err
 	}
-	fmt.Println("CommonPersonList=client==",response.CommonPersonList)
-	fmt.Println("StarPersonList =client==",response.StarPersonList)
+	//fmt.Println("CommonPersonList=client==",response.CommonPersonList)
+	//fmt.Println("StarPersonList =client==",response.StarPersonList)
 
 	return response,nil
 
